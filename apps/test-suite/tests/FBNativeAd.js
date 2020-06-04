@@ -72,10 +72,10 @@ export function test(t, { setPortalChild, cleanupPortal }) {
     const mountAndWaitFor = (child, propName = 'onAdLoaded') =>
       originalMountAndWaitFor(child, propName, setPortalChild);
 
-    t.afterEach(async () => await cleanupPortal());
-
     t.describe('when given a valid placementId', () => {
       let nativeAd;
+
+      t.afterEach(async () => await cleanupPortal());
 
       t.it(
         'nativeAd properly mounted',
@@ -91,8 +91,7 @@ export function test(t, { setPortalChild, cleanupPortal }) {
 
       variables.forEach(variable => {
         t.it(`checking if variable ${variable} is not null`, () => {
-          let value = nativeAd[variable];
-          t.expect(value).not.toBeNull();
+          t.expect(nativeAd?.[variable]).not.toBeNull();
         });
       });
     });
